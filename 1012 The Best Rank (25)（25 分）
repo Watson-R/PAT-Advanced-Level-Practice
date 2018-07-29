@@ -1,0 +1,54 @@
+#include<iostream>
+#include<iomanip>
+#include<functional>
+#include<algorithm>
+#include<limits.h>
+#include<vector>
+#include<time.h>
+#include<cctype>
+#include<string>
+#include<queue>
+#include<stack>
+#include<cmath>
+#include<limits>
+#include<map>
+#include<list>
+#include<set>
+using namespace std;
+int main()
+{
+	int c, m, e, x, y, i, j;
+	double a;
+	string id;
+	map<string, int> message;
+	multiset<double, greater<double>> C, M, E, A;
+	cin >> x >> y;
+	for (i = 0; i < x; i++)
+	{
+		cin >> id >> c >> m >> e;
+		message[id] = c * 1000000 + m * 1000 + e;
+		C.insert(c);
+		M.insert(m);
+		E.insert(e);
+		A.insert(double(c + m + e) / 3);
+	}
+	for (i = 0; i < y; i++)
+	{
+		cin >> id;
+		if(message.count(id)==0){ cout << "N/A" << endl; continue; }
+		c = message[id] / 1000000;
+		m = message[id] / 1000 % 1000;
+		e = message[id] % 1000;
+		a = double(c + m + e) / 3;
+		set<double>::iterator ita = A.begin(), itc = C.begin(), itm = M.begin(), ite = E.begin();
+		for (j = 1; j <= x; j++)
+		{
+			if (*ita == a) { cout << j << ' ' << 'A' << endl; break; }
+			else if(*itc==c) { cout << j << ' ' << 'C' << endl; break; }
+			else if (*itm == m) { cout << j << ' ' << 'M' << endl; break; }
+			else if (*ite == e) { cout << j << ' ' << 'E' << endl; break; }
+			else { ita++, itc++, itm++, ite++; }
+		}
+	}
+	return 0;
+}
